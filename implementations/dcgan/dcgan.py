@@ -38,7 +38,7 @@ parser.add_argument("--channels", type=int, default=1, help="number of image cha
 parser.add_argument("--sample_interval", type=int, default=400, help="interval between image sampling")
 parser.add_argument("--predict", type=int, default=1, help="predicting the images")
 parser.add_argument("--noise_type", type=str, default='gaussian', help="type of the noise")
-parser.add_argument("--noise_multiplier", type=float, default=1e-4, help="multiplier of the noise")
+parser.add_argument("--noise_multiplier", type=float, default=1e-6, help="multiplier of the noise")
 opt = parser.parse_args()
 print(opt)
 

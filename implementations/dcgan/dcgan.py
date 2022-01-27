@@ -39,6 +39,9 @@ parser.add_argument("--sample_interval", type=int, default=400, help="interval b
 parser.add_argument("--predict", type=int, default=1, help="predicting the images")
 parser.add_argument("--noise_type", type=str, default='gaussian', help="type of the noise")
 parser.add_argument("--noise_multiplier", type=float, default=1e-6, help="multiplier of the noise")
+parser.add_argument("--log_dir", type=str, default='logs/', help="logs dir")
+parser.add_argument("--models_dir", type=str, default='saved_models/', help="saved models")
+parser.add_argument("--images_dir", type=str, default='images_fedavg/', help="fedavg images")
 opt = parser.parse_args()
 print(opt)
 
@@ -237,8 +240,8 @@ def futures_call(imgs, optimizer_G, optimizer_D, opt, dataloader, logger, i, epo
 
     batches_done = epoch * len(dataloader) + i
     if batches_done % opt.sample_interval == 0:
-        torch.save(generator.state_dict(), "saved_models/generator_%d-%d.pth" % (batches_done, epoch))
-        torch.save(discriminator.state_dict(), "saved_models/discriminator_%d-%d.pth" % (batches_done, epoch))
+        torch.save(generator.state_dict(), opt.models_dir + "generator_%d-%d.pth" % (batches_done, epoch))
+        torch.save(discriminator.state_dict(), opt.models_dir + "discriminator_%d-%d.pth" % (batches_done, epoch))
         
     return discriminator.state_dict(), generator.state_dict()
 
@@ -266,7 +269,7 @@ def predict(named_parameters, batch_sizes, opt, dataloader, epoch, i):
     
     batches_done = epoch * len(dataloader) + i
     if batches_done % opt.sample_interval == 0:
-        save_image(gen_imgs.data[:25], "images_fedavg/%d.png" % batches_done, nrow=5, normalize=True)
+        save_image(gen_imgs.data[:25], opt.images_dir + "%d.png" % batches_done, nrow=5, normalize=True)
 
 # loggers = []
 # comm = MPI.COMM_WORLD
@@ -278,7 +281,7 @@ def predict(named_parameters, batch_sizes, opt, dataloader, epoch, i):
 
 loggers = []
 for i in range(5):
-    fh = open("logfile"+str(i)+".log", 'a')
+    fh = open(opt.log_dir + "logfile"+str(i)+".log", 'a')
     loggers.append(fh)
 
 def log_output(i):

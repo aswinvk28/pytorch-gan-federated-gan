@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/u93525/Documents/federated-learning-gan/pytorch-gan-federated-gan-2/implementations/dcgan/dcgan.py", line 350, in <module>
+    imgs2, _ = next(data_loader2)
+  File "/home/u93525/.local/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 521, in __next__
+    data = self._next_data()
+  File "/home/u93525/.local/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 560, in _next_data
+    index = self._next_index()  # may raise StopIteration
+  File "/home/u93525/.local/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 512, in _next_index
+    return next(self._sampler_iter)  # may raise StopIteration
+StopIteration
